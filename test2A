@@ -1,0 +1,27 @@
+import express from 'express';
+import cors from 'cors';
+
+const app = express();
+
+app.use(cors());
+
+app.get('/test2A', function(req, res) {
+  console.log(req.query);
+  res.send (sumGet(req.query));
+});
+
+app.listen(3000, function() {
+  console.log('Example app listaning on port 3000!')
+});
+
+function sumGet(getParam) {
+  let result = 0;
+
+   for(let key in getParam) {
+      if(key == 'a' || key == 'b') {
+       result += +getParam[key];
+     }
+  }
+  return "" + result;
+};
+
