@@ -15,27 +15,27 @@ app.listen(3000, function() {
 });
 
 function fullName(getName) {
-  if(!getName.fullname){
+  if(!getName.fullname){    //Проверка на пустые параметры
     return "Invalid fullname";
   }
   
-  let shortName = getName.fullname;
+  let shortName = getName.fullname.toLowerCase();
   console.log( shortName );
-    
-  if(shortName.search(/[0-9]|_|\/|\\/) != '-1'){
+  
+  if(shortName.search(/[0-9]|_|\/|\\/) != '-1'){  //Отсеивание цифр и других символов
     return "Invalid fullname";
   }
-
-  shortName = shortName.replace(/\s\s/g, "");
+  
+  shortName = shortName.trim().replace(/\s+/g, " ");  //Удаляем лишние проблеы
   
   shortName = shortName.split(" ");
   console.log(shortName.length)
   console.log(`${shortName[2]} ${shortName[0]}. ${shortName[1]}.`);
 
   switch(shortName.length) {
-    case 1: return shortName[0];
-    case 2: return `${shortName[1]} ${shortName[0][0]}.`;
-    case 3: return `${shortName[2]} ${shortName[0][0]}. ${shortName[1][0]}.`;
+    case 1: return `${shortName[0][0].toUpperCase() + shortName[0].slice(1)}`;
+    case 2: return `${shortName[1][0].toUpperCase() + shortName[1].slice(1)} ${shortName[0][0].toUpperCase()}.`;
+    case 3: return `${shortName[2][0].toUpperCase() + shortName[2].slice(1)} ${shortName[0][0].toUpperCase()}. ${shortName[1][0].toUpperCase()}.`;
     default: return "Invalid fullname";
   }
 };
