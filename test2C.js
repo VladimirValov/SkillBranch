@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 
 app.get('/test2C', function(req, res) {
-  //console.log(req.query);
+   console.log(req.query);
   res.send( userName(req.query) );
 })
 
@@ -17,7 +17,7 @@ app.listen(3000, function() {
 function userName(url) {
  console.log(url.username);
 
-  let user = url.username.match(/(?:http[s]?:\/\/)?(?:www.)?(?:[\w\-]+\.[\w\-]+\/)?@?(\w+\.?\w+)/);
-  //console.log(user);
+  let user = url.username.match(/(?:http[s]?:\/\/)?(?:www.)?(?:[\w-]+\.[\w-]+\/)?@?(\w+\.?\w+)/);
+  console.log(user);
   if(user) return("@" + user[1]);
 };
