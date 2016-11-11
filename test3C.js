@@ -17,107 +17,66 @@ fetch(pcUrl)
 const app = express();
 app.use(cors());
 
-app.get('/test3A', function(req, res) {
-  res.json(pc);
+
+app.get('/test3A/:id1?/:id2?/:id3?', function(req, res) {
+  console.log(req.originalUrl);
+  console.log("id1 = " + req.params.id1);
+  console.log("id2 = " + req.params.id2);
+  console.log("id3 = " + req.params.id3);
+
+  console.log( "Проверка на корректнось" );
+  if (req.params.id1 && pc[req.params.id1] === undefined) {
+    console.log(1);
+    return res.status(404).send('Not found');
+  }
+  if ( req.params.id2 && !pc[req.params.id1][req.params.id2]) {
+    console.log(2);
+    return res.status(404).send('Not found');
+  }
+  if ( req.params.id3 && !pc[req.params.id1][req.params.id2][req.params.id3]){
+    console.log(3);
+    return res.status(404).send('Not found');
+  }
+  console.log( "Проверка на корректнось пройдена" );
+
+  if(req.params.id1 && req.params.id2 && req.params.id3) {
+    
+    console.log(pc[req.params.id1][req.params.id2][req.params.id3]);
+    return res.json(pc[req.params.id1][req.params.id2][req.params.id3]);
+  }
+  if(req.params.id1 && req.params.id2) {
+    
+    console.log(pc[req.params.id1][req.params.id2]);
+    return res.json(pc[req.params.id1][req.params.id2]);
+  }
+  if(req.params.id1) {
+   return res.json(pc[req.params.id1]);
+  }
+
   console.log(pc);
-
+  res.json(pc);
 });
-//{"C:":"41943040B","D:":"16777216B"}
+
 app.get('/test3A/volumes', function(req, res) {
-
-
   let volumeInfo = {};
 
   for(let i = 0; i <pc.hdd.length; i++) {
-
     if(volumeInfo[pc.hdd[i].volume]) {
       volumeInfo[pc.hdd[i].volume] += pc.hdd[i].size;
       console.log(i + " " + pc.hdd[i].volume);
     }
     else
-    volumeInfo[pc.hdd[i].volume] = pc.hdd[i].size;
+      volumeInfo[pc.hdd[i].volume] = pc.hdd[i].size;
   }
-
   for (let key in volumeInfo) {
     volumeInfo[key] = volumeInfo[key] + "B";
   }
-
   console.log(volumeInfo);
-  res.json(volumeInfo);
-
   console.log(pc.hdd);
 
-
-})
-
-app.get('/test3A/:id', function(req, res) {
-  let param = req.params.id;
-  console.log("param = " + param);
-
-  res.json(pc[param]);
-  console.log(req.params.id);
-
-})
-
-app.get('/test3A/board/:id', function(req, res) {
-  let param = req.params.id;
-  console.log("param = " + param);
-
-  res.json(pc.board[param]);
-  console.log(req.params.id);
-
-})
-
-app.get('/test3A/ram/:id', function(req, res) {
-  console.log(req.baseUrl);
-  let param = req.params.id;
-  console.log("param = " + param);
-
-  res.json(pc.ram[param]);
-  console.log(req.params.id);
-})
-
-
-app.get('/test3A/os/:id', function(req, res) {
-  let param = req.params.id;
-  console.log("param = " + param);
-
-  res.json(pc.os[param]);
-  console.log(req.params.id);
-})
-
-
-app.get('/test3A/floppy/:id', function(req, res) {
-  let param = req.params.id;
-  console.log("param = " + param);
-
-  res.json(pc.floppy[param]);
-  console.log(req.params.id);
-})
-
-app.get('/test3A/hdd/:id', function(req, res) {
-  let param = req.params.id;
-  console.log("param = " + param);
-
-  res.json(pc.hdd[param]);
-  console.log(req.params.id);
-})
-
-app.get('/test3A/monitor/:id', function(req, res) {
-  let param = req.params.id;
-  console.log("param = " + param);
-
-  res.json(pc.monitor[param]);
-  console.log(req.params.id);
-})
-
+  res.json(volumeInfo);
+});
 
 app.listen(3000, function() {
   console.log('Example app listaning on port 3000!')
 });
-
-function userName(url) {
-
-};
-
-
