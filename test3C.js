@@ -18,6 +18,27 @@ const app = express();
 app.use(cors());
 
 
+app.get('/test3A/volumes', function(req, res) {
+  let volumeInfo = {};
+
+  for(let i = 0; i <pc.hdd.length; i++) {
+    if(volumeInfo[pc.hdd[i].volume]) {
+      volumeInfo[pc.hdd[i].volume] += pc.hdd[i].size;
+      console.log(i + " " + pc.hdd[i].volume);
+    }
+    else
+      volumeInfo[pc.hdd[i].volume] = pc.hdd[i].size;
+  }
+  for (let key in volumeInfo) {
+    volumeInfo[key] = volumeInfo[key] + "B";
+  }
+  console.log(volumeInfo);
+  console.log(pc.hdd);
+
+  res.json(volumeInfo);
+});
+
+
 app.get('/test3A/:id1?/:id2?/:id3?', function(req, res) {
   console.log(req.originalUrl);
   console.log("id1 = " + req.params.id1);
@@ -40,12 +61,12 @@ app.get('/test3A/:id1?/:id2?/:id3?', function(req, res) {
   console.log( "Проверка на корректнось пройдена" );
 
   if(req.params.id1 && req.params.id2 && req.params.id3) {
-    
+
     console.log(pc[req.params.id1][req.params.id2][req.params.id3]);
     return res.json(pc[req.params.id1][req.params.id2][req.params.id3]);
   }
   if(req.params.id1 && req.params.id2) {
-    
+
     console.log(pc[req.params.id1][req.params.id2]);
     return res.json(pc[req.params.id1][req.params.id2]);
   }
@@ -55,26 +76,6 @@ app.get('/test3A/:id1?/:id2?/:id3?', function(req, res) {
 
   console.log(pc);
   res.json(pc);
-});
-
-app.get('/test3A/volumes', function(req, res) {
-  let volumeInfo = {};
-
-  for(let i = 0; i <pc.hdd.length; i++) {
-    if(volumeInfo[pc.hdd[i].volume]) {
-      volumeInfo[pc.hdd[i].volume] += pc.hdd[i].size;
-      console.log(i + " " + pc.hdd[i].volume);
-    }
-    else
-      volumeInfo[pc.hdd[i].volume] = pc.hdd[i].size;
-  }
-  for (let key in volumeInfo) {
-    volumeInfo[key] = volumeInfo[key] + "B";
-  }
-  console.log(volumeInfo);
-  console.log(pc.hdd);
-
-  res.json(volumeInfo);
 });
 
 app.listen(3000, function() {
