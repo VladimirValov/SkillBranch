@@ -21,13 +21,14 @@ app.use(cors());
 app.get('/test3A/volumes', function(req, res) {
   let volumeInfo = {};
   
- pc.hdd.forEach(function (hdd) {
+  pc.hdd.forEach(function (hdd) {
 	volumeInfo[hdd.volume] = (volumeInfo[hdd.volume] || 0) + hdd.size;
   });
   
-    for (let key in volumeInfo) {
+  for (let key in volumeInfo) {
     volumeInfo[key] = volumeInfo[key] + "B";
   }
+  
   console.log(volumeInfo);
   console.log(pc.hdd);
 
