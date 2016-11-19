@@ -25,10 +25,10 @@ const checkUrl = function (path) {
 	console.log( index + " параметр" );
 	console.log( current );
 		
-	if(current == "") 
-		return prev;
-	if(prev === undefined)
-		return undefined;
+	if(current == "") return prev;
+	
+	if(prev === undefined) return undefined;
+	
 	if( current == "length" && (Array.isArray(prev)|| typeof(prev) == "string") ) 
 		return undefined;
 		
