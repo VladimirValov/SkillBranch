@@ -19,23 +19,21 @@ fetch(pcUrl)
 
 const checkUrl = function (path) {
 
-	let arrPath = path.split("/");	 
+  let arrPath = path.split("/");	 	
+	
+  let result = arrPath.reduce( (prev, current, index)=>{
+	console.log( index + " параметр" );
+	console.log( current );
 		
-	let result = arrPath.reduce( (prev, current, index)=>{
-		console.log( index + " параметр" );
-		console.log( current );
+	if(current == "") 
+		return prev;
+	if(prev === undefined)
+		return undefined;
+	if( current == "length" && (Array.isArray(prev)|| typeof(prev) == "string") ) 
+		return undefined;
 		
-		if(current == "") 
-			return prev;
-				
-		if(prev === undefined)
-			return undefined;
-		
-		if( current == "length" && (Array.isArray(prev)|| typeof(prev) == "string") ) 
-			return undefined;
-		
-		console.log( prev [current]);	
-		return prev[current];
+	console.log( prev [current]);	
+	return prev[current];
 	}, pc);
 	
 	return result	
@@ -72,7 +70,7 @@ app.get('/test3A/*', function(req, res) {
 	res.status(404).send("Not Found");
   
   res.json(answer);
-	
+
 });
 
 app.listen(3000, function() {
