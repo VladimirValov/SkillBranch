@@ -1,4 +1,3 @@
-
 /**
  * Created by Безопасная on 08.11.2016.
  */
@@ -28,6 +27,35 @@ function colorFormat(colorRaw) {
 	  color = colorRaw["color"].toLowerCase().trim();
 	} 
 	 
+
+	 if ( color.search(/^rgb/i) != "-1") {
+		 
+		 
+		 console.log("rgb");
+		 console.log( color.search(/^rgb/i) );
+		 
+		 let rgb = color.match(/\d{1,3}/g);
+		 console.log(rgb);
+		 
+		 color ="";
+			
+		 rgb.forEach ( (value) => {
+			 if (value < 10 ) color += "0";
+			 
+			 
+			 color += parseInt(value,10).toString(16)
+			 
+			 
+			 console.log( parseInt(value,10).toString(16) );
+		
+		 if(value > 0  ){}
+		 }
+		 );
+		 
+		 
+	 } 
+	
+	color = color.replace(/#/,"");
 	
 	
 	console.log(color);	
