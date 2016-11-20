@@ -1,1 +1,96 @@
 
+/**
+ * Created by Безопасная on 08.11.2016.
+ */
+import express from 'express';
+import cors from 'cors';
+
+const app = express();
+
+app.use(cors());
+
+app.get('/test2D', function(req, res) {
+  
+  console.log(req.query);
+  
+  res.send (colorFormat(req.query));
+
+});
+
+app.listen(3000, function() {
+  console.log('Example app listaning on port 3000!')
+});
+
+function colorFormat(colorRaw) {
+	let color = "Invalid color";
+	 
+	if ( colorRaw["color"] ) {
+	  color = colorRaw["color"].toLowerCase().trim();
+	} 
+	 
+	
+	
+	console.log(color);	
+	console.log(color.length);	
+	
+	if (color.length == 3) 
+		color = `${color[0]}${color[0]}${color[1]}${color[1]}${color[2]}${color[2]}`;
+	
+	
+	if (color < 0 || color.length != 6 )
+		color = "Invalid color"; 
+	
+	color =`#${color}`
+	
+	color = ( color.match(/#[a-f0-9]{6}/) || ["Invalid color"] ) [0];
+	
+	console.log(color);	
+	
+	
+
+	
+	
+	
+	/*console.log(color.toString(16));
+	console.log("ffffff".toString(16));
+	console.log(color.toString(16) > "ffffff".toString(16));
+	if (color.toString(16) > "ffffff".toString(16)) {
+		console.log(color.toString(16));
+		return("Invalid color");
+	}
+	*/
+	
+	console.log(colorRaw["color"]);
+//	let color = colorRaw.match(/\?color=#?([\w\d]+)/);
+	return color;
+	
+}
+
+/*
+function colorFormat(getName) {
+  if(!getName.fullname){
+    return "Invalid fullname";
+  }
+
+  let shortName = getName.fullname.toLowerCase();
+  console.log( shortName );
+
+  if(shortName.search(/[0-9]|_|\/|\\/) != '-1'){
+    return "Invalid fullname";
+  }
+
+  shortName = shortName.trim().replace(/\s+/g, " ");
+  // shortName = shortName.replace(/\s\s/g, "");
+
+  shortName = shortName.split(" ");
+  console.log(shortName.length)
+  console.log(`${shortName[2]} ${shortName[0]}. ${shortName[1]}.`);
+
+  switch(shortName.length) {
+    case 1: return `${shortName[0][0].toUpperCase() + shortName[0].slice(1)}`;
+    case 2: return `${shortName[1][0].toUpperCase() + shortName[1].slice(1)} ${shortName[0][0].toUpperCase()}.`;
+    case 3: return `${shortName[2][0].toUpperCase() + shortName[2].slice(1)} ${shortName[0][0].toUpperCase()}. ${shortName[1][0].toUpperCase()}.`;
+    default: return "Invalid fullname";
+  }
+};
+*/
